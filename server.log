@@ -1,0 +1,9 @@
+2026-06-13 17:36:52,345 - INFO - Starting File Manager MCP on port 8000
+2026-06-13 17:36:53,042 - INFO - StreamableHTTP session manager started
+2026-06-13 17:39:11,158 - INFO - Created new transport with session ID: 018f214ef3e34a9ba6123738ec3f1a5e
+2026-06-13 17:39:11,296 - INFO - Processing request of type SetLevelRequest
+2026-06-13 17:39:59,145 - INFO - Created new transport with session ID: 3591fef37e8741fc8ebbcd0c36aec99f
+2026-06-13 17:40:35,075 - INFO - Processing request of type ListToolsRequest
+2026-06-13 17:40:39,357 - INFO - Processing request of type CallToolRequest
+2026-06-13 17:40:53,005 - INFO - Processing request of type CallToolRequest
+2026-06-13 17:40:53,012 - INFO - list_files executed successfully

@@ -4,24 +4,24 @@
 [![FastMCP](https://img.shields.io/badge/FastMCP-Production%20Ready-4CAF50?logo=fastapi&logoColor=white)](https://github.com/jreichel/fastmcp)
 [![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-0066CC?logoColor=white)](https://modelcontextprotocol.io/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Production Ready](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)](https://github.com/parthRana26/file-manager-mcp)
+[![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)](https://github.com/parthRana26/file-manager-mcp)
 
 ---
 
 ## 🎯 Overview
 
-**File Manager MCP** is a production-grade Model Context Protocol (MCP) server built with FastMCP that provides comprehensive file system management capabilities. It enables AI agents, LLM applications, and remote clients to interact with the filesystem through a standardized, secure interface via Streamable HTTP transport.
+**File Manager MCP** is a production-grade Model Context Protocol (MCP) server that provides comprehensive file system management capabilities for local execution. It enables AI agents and LLM applications like Claude, Cursor, VS Code, and Windsurf to perform sophisticated filesystem operations with a standardized, secure interface.
 
-Whether you're building intelligent file automation workflows, AI-assisted development tools, or delegating filesystem operations to autonomous agents, File Manager MCP provides a robust, well-tested foundation with 34 specialized tools covering everything from basic CRUD operations to advanced utilities like duplicate detection, batch processing, and archive management.
+This MCP server is designed to run locally on your machine, providing AI assistants with trusted access to your filesystem through 34 specialized tools organized by category. Whether you're automating file operations, performing batch tasks, or enabling AI-assisted development workflows, File Manager MCP delivers a robust foundation.
 
 ### Why File Manager MCP?
 
-- **Standardized Protocol**: Implements Model Context Protocol for seamless integration with AI frameworks and agents
+- **Local Execution**: Runs entirely on your machine with no cloud dependencies or external services
+- **Standardized Protocol**: Implements Model Context Protocol for seamless AI integration
 - **Comprehensive Tooling**: 34 production-tested tools covering all major filesystem operations
 - **AI-First Design**: Purpose-built for LLM interactions and autonomous agent workflows
-- **Enterprise-Ready**: Security validations, error handling, logging, and deployment patterns
-- **Streamable HTTP**: Modern transport protocol enabling real-time interactions
-- **FastMCP Foundation**: Leverages the lightweight, async-native FastMCP framework
+- **Security-First**: Path validation, permission checks, and configurable access controls
+- **Multi-Client Support**: Works with Claude Desktop, Cursor, VS Code, and Windsurf
 
 ---
 
@@ -58,294 +58,293 @@ Whether you're building intelligent file automation workflows, AI-assisted devel
 
 ---
 
-## 🏗️ Architecture
-
-### High-Level Design
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    AI Agent / Client                         │
-│              (Claude, Local Agent, etc.)                     │
-└────────────────────────┬────────────────────────────────────┘
-                         │
-                    MCP Protocol
-                  (Streamable HTTP)
-                         │
-┌────────────────────────▼────────────────────────────────────┐
-│                 File Manager MCP Server                      │
-│              (FastMCP + Uvicorn on Port 8000)               │
-├─────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌──────────────────┐   │
-│  │File Service │  │Search Service│ │Batch Service    │   │
-│  │(CRUD, I/O)  │  │(Find, Tree)  │  │(Bulk Ops)       │   │
-│  └─────────────┘  └─────────────┘  └──────────────────┘   │
-│  ┌─────────────┐  ┌─────────────┐  ┌──────────────────┐   │
-│  │ ZIP Service │  │Utility Service│ │Security Service │   │
-│  │(Archive)    │  │(Hash, Clean)  │  │(Path Validation)│   │
-│  └─────────────┘  └─────────────┘  └──────────────────┘   │
-├─────────────────────────────────────────────────────────────┤
-│                  Filesystem (Local/Remote)                   │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Service Architecture
-
-- **File Service**: Core file I/O operations with path validation
-- **Search Service**: Pattern matching and tree generation
-- **Batch Service**: Optimized bulk operations with rollback capability
-- **ZIP Service**: Archive creation and extraction
-- **Utility Service**: Hashing, deduplication, cleanup, and comparison
-- **Security Service**: Path traversal prevention and permission checks
-
----
-
-## 📁 Project Structure
-
-```
-file-manager-mcp/
-├── main.py                      # Entry point, MCP server initialization
-├── server.py                    # FastMCP server configuration
-├── auth.py                      # Authentication & authorization
-├── config.py                    # Configuration management
-├── requirements.txt             # Python dependencies
-├── README.md                    # This file
-│
-├── services/                    # Core business logic
-│   ├── file_service.py         # File CRUD operations
-│   ├── search_service.py       # Search and discovery tools
-│   ├── batch_service.py        # Bulk operations
-│   ├── zip_service.py          # Archive operations
-│   ├── utility_service.py      # Hash, cleanup, comparison tools
-│   └── security_service.py     # Security validations
-│
-└── server.log                   # Application logs
-```
-
----
-
-## 🚀 Installation
-
-### Prerequisites
+## 📋 Prerequisites
 
 - **Python**: 3.11 or higher
 - **UV**: Package manager (recommended) or pip
 - **Git**: For cloning the repository
 
-### Quick Setup
+### System Requirements
+- **OS**: Linux, macOS, or Windows
+- **RAM**: Minimum 512MB (1GB+ recommended)
+- **Disk**: 50MB free space for installation
+
+---
+
+## 🚀 Installation
+
+### Step 1: Clone the Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/parthRana26/file-manager-mcp.git
 cd file-manager-mcp
+```
 
-# Create virtual environment
+### Step 2: Create Virtual Environment
+
+```bash
+# Using UV (recommended)
 uv venv
 
-# Activate environment
+# Or using Python venv
+python3.11 -m venv .venv
+```
+
+### Step 3: Activate Environment
+
+```bash
 # On Linux/macOS:
 source .venv/bin/activate
+
 # On Windows:
 .venv\Scripts\activate
+```
 
-# Install dependencies
+### Step 4: Install Dependencies
+
+```bash
+# Using UV
 uv pip install -r requirements.txt
+
+# Or using pip
+pip install -r requirements.txt
 ```
 
 ### Dependencies
 
-Key dependencies (see `requirements.txt` for complete list):
+Key dependencies included in `requirements.txt`:
 
-- **fastmcp**: FastMCP framework for MCP server implementation
-- **uvicorn**: ASGI web server for HTTP transport
-- **pydantic**: Data validation and configuration management
-- **aiofiles**: Async file I/O operations
-- **python-dotenv**: Environment variable management
+- **fastmcp** (>=0.1.0): FastMCP framework for MCP server implementation
+- **python-dotenv** (>=1.0.0): Environment variable management
 
 ---
 
-## 💻 Local Development
+## 💻 Quick Start
 
-### Running the Server
+### Starting the Server
 
 ```bash
-# Start the MCP server
+# Option 1: Using UV
 uv run python main.py
+
+# Option 2: Direct Python execution
+python main.py
 ```
 
 Expected output:
 ```
-INFO: Uvicorn running on http://0.0.0.0:8000
-INFO: File Manager MCP Server initialized
-INFO: 34 tools registered
-INFO: Ready to accept connections
+INFO:uvicorn.server:Uvicorn running on http://0.0.0.0:8000
+INFO:main:Starting File Manager MCP on port 8000
 ```
 
-The server will be available at: `http://localhost:8000/mcp`
+The server will be available at: **`http://localhost:8000/mcp`**
 
-### Development Environment Variables
-
-Create a `.env` file in the project root:
+### Verify Server is Running
 
 ```bash
-# Server configuration
-MCP_HOST=0.0.0.0
-MCP_PORT=8000
-LOG_LEVEL=DEBUG
-
-# Optional: Set allowed base directories
-ALLOWED_BASE_DIRS=/path/to/workspace
-
-# Optional: Enable security features
-ENABLE_PATH_VALIDATION=true
-ENABLE_REQUEST_LOGGING=true
-```
-
-### Logging & Debugging
-
-Enable debug logging:
-
-```bash
-# Run with debug logging
-LOG_LEVEL=DEBUG uv run python main.py
-```
-
-Logs are written to `server.log` and console. Each request/response is logged with:
-- Timestamp
-- Tool name
-- Parameters
-- Result status
-- Execution time
-
----
-
-## 🧪 Testing with MCP Inspector
-
-The MCP Inspector is an interactive testing tool for MCP servers.
-
-### Setup & Connection
-
-```bash
-# Terminal 1: Start the File Manager MCP server
-uv run python main.py
-
-# Terminal 2: Open MCP Inspector
-npx @modelcontextprotocol/inspector
-```
-
-### Connecting to the Server
-
-In the Inspector UI:
-
-1. **Transport**: Select `Streamable HTTP`
-2. **URL**: Enter `http://localhost:8000/mcp`
-3. **Connect**: Click the connect button
-
-### Testing Tools
-
-Once connected, you can:
-
-1. **Browse Tools**: View all 34 available tools with their specifications
-2. **Execute Tools**: Call any tool with custom parameters
-3. **View Results**: See tool outputs, errors, and execution details
-4. **Inspect Resources**: Access resource definitions if applicable
-
-### Example Test Workflow
-
-```
-1. Call: health_check_tool
-   → Verify server is running
-   
-2. Call: available_tools_tool
-   → List all registered tools
-   
-3. Call: list_files_tool with path: "."
-   → List current directory contents
-   
-4. Call: tree_view_tool with path: "." and max_depth: 3
-   → Generate directory tree
-   
-5. Call: search_files_tool with pattern: "*.py" and path: "."
-   → Find all Python files
+# In another terminal
+curl http://localhost:8000/mcp
 ```
 
 ---
 
-## 🌐 Deployment
+## ⚙️ Configuration
 
-### Prefect Horizon (Recommended)
+### Environment Variables
 
-**Prefect Horizon** is the official hosting platform for MCP servers with built-in scaling, monitoring, and management.
-
-#### Deployment Steps
-
-1. **Push to GitHub**
-   ```bash
-   git push origin main
-   ```
-
-2. **Access Prefect Horizon**
-   - Navigate to [Prefect Horizon](https://horizon.prefect.cloud/)
-   - Sign in with your account
-
-3. **Create Hosted MCP Server**
-   - Click "Create" → "Hosted MCP Server"
-   - Select "File Manager MCP" or your forked repository
-
-4. **Configure Deployment**
-   - **Repository**: `parthRana26/file-manager-mcp`
-   - **Branch**: `main` (or your desired branch)
-   - **Entrypoint**: `main.py`
-   - **Port**: `8000`
-
-5. **Set Environment Variables**
-   ```
-   LOG_LEVEL=INFO
-   ENABLE_PATH_VALIDATION=true
-   ```
-
-6. **Deploy**
-   - Click "Deploy"
-   - Wait for deployment confirmation
-   - Access your server via provided URL
-
-#### Monitoring & Logs
-
-In Prefect Horizon:
-- View real-time server logs
-- Monitor tool execution statistics
-- Track request/response times
-- Set up alerts for errors
-
-### Alternative Deployment Platforms
-
-#### Docker
-
-```dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
+Create a `.env` file in the project root to configure the server:
 
 ```bash
-docker build -t file-manager-mcp .
-docker run -p 8000:8000 file-manager-mcp
+# Server Settings
+MCP_HOST=0.0.0.0              # Bind address (0.0.0.0 for all interfaces)
+MCP_PORT=8000                 # Server port
+LOG_LEVEL=INFO                # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# Security Settings
+ENABLE_PATH_VALIDATION=true   # Validate paths to prevent traversal attacks
+ENABLE_REQUEST_LOGGING=true   # Log all requests/responses
+
+# Optional: Restrict operations to specific directories
+# ALLOWED_BASE_DIRS=/home/user/projects:/tmp/workspace
 ```
 
-#### Railway, Render, or VPS
+### Default Configuration
 
-These platforms support Python ASGI applications. Ensure:
-- Python 3.11+ runtime
-- Port 8000 exposure
-- Environment variables configured
-- Health check endpoint: `GET /health`
+If no `.env` file is provided:
+- **Host**: `0.0.0.0`
+- **Port**: `8000`
+- **Log Level**: `INFO`
+- **Path Validation**: Enabled by default
+- **Request Logging**: Enabled by default
+
+---
+
+## 🔌 MCP Client Configuration
+
+### Claude Desktop
+
+1. **Locate Configuration File**
+   - **macOS/Linux**: `~/.config/Claude/claude_desktop_config.json`
+   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. **Edit Configuration**
+
+Add the File Manager MCP server to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "file-manager": {
+      "command": "python",
+      "args": [
+        "-m",
+        "uvicorn",
+        "main:mcp",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000"
+      ],
+      "cwd": "/path/to/file-manager-mcp"
+    }
+  }
+}
+```
+
+3. **Restart Claude Desktop** for changes to take effect
+
+### Cursor
+
+1. **Open Settings** (`Cmd+,` or `Ctrl+,`)
+
+2. **Navigate to**: Features → MCP
+
+3. **Add New Server**:
+   - **Name**: `file-manager`
+   - **Type**: `stdio` or `HTTP`
+   - **Command**: `python main.py`
+   - **Working Directory**: `/path/to/file-manager-mcp`
+
+4. **Save and Restart** Cursor
+
+### VS Code
+
+1. **Install MCP Extension** (if not already installed)
+   - Search for "MCP" in the Extensions marketplace
+
+2. **Configure MCP Extension**
+
+Add to VS Code `settings.json`:
+
+```json
+"mcp.servers": {
+  "file-manager": {
+    "command": "python",
+    "args": ["main.py"],
+    "cwd": "/path/to/file-manager-mcp",
+    "env": {
+      "PYTHONUNBUFFERED": "1"
+    }
+  }
+}
+```
+
+3. **Restart VS Code**
+
+### Windsurf
+
+1. **Open Settings** (`Cmd+,` or `Ctrl+,`)
+
+2. **Search for "MCP"** in settings
+
+3. **Add Server Configuration**:
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "file-manager": {
+        "command": "python",
+        "args": ["main.py"],
+        "cwd": "/path/to/file-manager-mcp"
+      }
+    }
+  }
+}
+```
+
+4. **Reload Windsurf**
+
+---
+
+## 📁 Complete Tools Reference
+
+### File Management Tools (11 tools)
+
+| Tool | Parameters | Purpose |
+|------|-----------|---------|
+| `list_files_tool` | `path: str` | List all files and directories in a path |
+| `create_file_tool` | `path: str`, `content: str` | Create a new file with content |
+| `read_file_tool` | `path: str` | Read complete file contents |
+| `update_file_tool` | `path: str`, `content: str` | Replace entire file content |
+| `append_file_tool` | `path: str`, `content: str` | Append content to existing file |
+| `delete_file_tool` | `path: str` | Delete a file permanently |
+| `rename_file_tool` | `old_path: str`, `new_path: str` | Rename file or directory |
+| `move_file_tool` | `source: str`, `destination: str` | Move file to new location |
+| `copy_file_tool` | `source: str`, `destination: str` | Copy file to destination |
+| `create_directory_tool` | `path: str` | Create new directory |
+| `delete_directory_tool` | `path: str` | Delete directory (recursive) |
+
+### Search & Discovery Tools (4 tools)
+
+| Tool | Parameters | Purpose |
+|------|-----------|---------|
+| `search_files_tool` | `path: str`, `keyword: str` | Find files by name pattern |
+| `get_file_info_tool` | `path: str` | Get detailed file metadata (size, permissions, dates) |
+| `get_directory_info_tool` | `path: str` | Get directory statistics (file count, total size) |
+| `tree_view_tool` | `path: str` | Generate visual directory tree structure |
+
+### Batch Operations Tools (7 tools)
+
+| Tool | Parameters | Purpose |
+|------|-----------|---------|
+| `batch_create_files_tool` | `files: list` | Create multiple files in single operation |
+| `batch_delete_files_tool` | `paths: list` | Delete multiple files efficiently |
+| `batch_move_files_tool` | `operations: list` | Move multiple files with path pairs |
+| `batch_copy_files_tool` | `operations: list` | Copy multiple files with path pairs |
+| `batch_rename_files_tool` | `operations: list` | Rename multiple files in batch |
+| `batch_create_directories_tool` | `paths: list` | Create multiple directories |
+| `batch_delete_directories_tool` | `paths: list` | Delete multiple directories |
+
+### Archive Operations Tools (3 tools)
+
+| Tool | Parameters | Purpose |
+|------|-----------|---------|
+| `create_zip_tool` | `source_path: str`, `zip_path: str` | Create ZIP archive from directory/file |
+| `extract_zip_tool` | `zip_path: str`, `destination: str` | Extract ZIP archive to destination |
+| `list_zip_contents_tool` | `zip_path: str` | List all files within ZIP archive |
+
+### Utility & Analysis Tools (7 tools)
+
+| Tool | Parameters | Purpose |
+|------|-----------|---------|
+| `file_hash_tool` | `path: str`, `algorithm: str` | Generate file hash (MD5, SHA-1, SHA-256) |
+| `duplicate_file_finder_tool` | `path: str` | Find duplicate files by content hash |
+| `compare_files_tool` | `file1: str`, `file2: str` | Compare two files byte-by-byte |
+| `compare_directories_tool` | `dir1: str`, `dir2: str` | Compare directory structures and contents |
+| `find_large_files_tool` | `path: str`, `min_size_mb: float` | Find files exceeding size threshold |
+| `clean_empty_directories_tool` | `path: str` | Remove all empty directories recursively |
+| `clean_temp_files_tool` | `path: str` | Remove temporary files (*.tmp, *.bak, etc.) |
+
+### System & Metadata Tools (2 tools)
+
+| Tool | Parameters | Purpose |
+|------|-----------|---------|
+| `health_check_tool` | None | Verify server is running and healthy |
+| `server_info_tool` | None | Get server version, status, and tool count |
+| `available_tools_tool` | None | List all available tools and categories |
+
+**Total**: 34 tools across 6 categories
 
 ---
 
@@ -354,86 +353,72 @@ These platforms support Python ASGI applications. Ensure:
 ### Basic File Operations
 
 ```python
-# Using Python client
+# Example: Create and read a file
 from mcp import Client
 
 client = Client("http://localhost:8000/mcp")
 
-# List files in directory
-result = await client.call_tool("list_files_tool", {
-    "path": "/home/user/documents"
-})
-
 # Create a new file
 result = await client.call_tool("create_file_tool", {
-    "path": "/home/user/documents/notes.txt",
-    "content": "Hello, World!"
+    "path": "/tmp/notes.txt",
+    "content": "Important notes go here"
 })
 
-# Read file content
+# Read the file back
 result = await client.call_tool("read_file_tool", {
-    "path": "/home/user/documents/notes.txt"
+    "path": "/tmp/notes.txt"
 })
+print(result)  # Returns: {"content": "Important notes go here"}
 
-# Update file
-result = await client.call_tool("update_file_tool", {
-    "path": "/home/user/documents/notes.txt",
+# Update the file
+await client.call_tool("update_file_tool", {
+    "path": "/tmp/notes.txt",
     "content": "Updated content"
 })
 
-# Delete file
-result = await client.call_tool("delete_file_tool", {
-    "path": "/home/user/documents/notes.txt"
+# Delete the file
+await client.call_tool("delete_file_tool", {
+    "path": "/tmp/notes.txt"
 })
 ```
 
-### Search Operations
+### Search and Discovery
 
 ```python
-# Find all Python files
+# Find all Python files in a directory
 result = await client.call_tool("search_files_tool", {
     "path": "/home/user/projects",
-    "pattern": "*.py"
+    "keyword": "*.py"
 })
 
-# Get file information
+# Get detailed file information
 result = await client.call_tool("get_file_info_tool", {
     "path": "/home/user/projects/main.py"
 })
 
 # Generate directory tree
 result = await client.call_tool("tree_view_tool", {
-    "path": "/home/user/projects",
-    "max_depth": 3
+    "path": "/home/user/projects"
 })
 ```
 
 ### Batch Operations
 
 ```python
-# Batch create multiple files
+# Create multiple files at once
 result = await client.call_tool("batch_create_files_tool", {
     "files": [
-        {"path": "/tmp/file1.txt", "content": "File 1"},
-        {"path": "/tmp/file2.txt", "content": "File 2"},
-        {"path": "/tmp/file3.txt", "content": "File 3"}
+        {"path": "/tmp/file1.txt", "content": "Content 1"},
+        {"path": "/tmp/file2.txt", "content": "Content 2"},
+        {"path": "/tmp/file3.txt", "content": "Content 3"}
     ]
 })
 
-# Batch delete files
-result = await client.call_tool("batch_delete_files_tool", {
-    "paths": [
-        "/tmp/file1.txt",
-        "/tmp/file2.txt",
-        "/tmp/file3.txt"
-    ]
-})
-
-# Batch move files
+# Move multiple files
 result = await client.call_tool("batch_move_files_tool", {
     "operations": [
-        {"source": "/tmp/src1.txt", "destination": "/home/user/dst1.txt"},
-        {"source": "/tmp/src2.txt", "destination": "/home/user/dst2.txt"}
+        {"source": "/tmp/old1.txt", "destination": "/home/user/new1.txt"},
+        {"source": "/tmp/old2.txt", "destination": "/home/user/new2.txt"}
     ]
 })
 ```
@@ -441,37 +426,31 @@ result = await client.call_tool("batch_move_files_tool", {
 ### Archive Operations
 
 ```python
-# Create ZIP archive
+# Create a backup ZIP
 result = await client.call_tool("create_zip_tool", {
     "source_path": "/home/user/documents",
     "zip_path": "/home/user/backup.zip"
-})
-
-# Extract ZIP archive
-result = await client.call_tool("extract_zip_tool", {
-    "zip_path": "/home/user/backup.zip",
-    "extract_path": "/home/user/restored"
 })
 
 # List ZIP contents
 result = await client.call_tool("list_zip_contents_tool", {
     "zip_path": "/home/user/backup.zip"
 })
+
+# Extract archive
+result = await client.call_tool("extract_zip_tool", {
+    "zip_path": "/home/user/backup.zip",
+    "destination": "/home/user/restored"
+})
 ```
 
-### Utility Operations
+### File Analysis & Cleanup
 
 ```python
-# Find large files
+# Find large files (>100MB)
 result = await client.call_tool("find_large_files_tool", {
     "path": "/home/user",
-    "size_mb": 100
-})
-
-# Generate file hash
-result = await client.call_tool("file_hash_tool", {
-    "path": "/home/user/file.bin",
-    "algorithm": "sha256"
+    "min_size_mb": 100
 })
 
 # Find duplicate files
@@ -479,459 +458,358 @@ result = await client.call_tool("duplicate_file_finder_tool", {
     "path": "/home/user/documents"
 })
 
-# Compare files
+# Compare two files
 result = await client.call_tool("compare_files_tool", {
-    "path1": "/home/user/file1.txt",
-    "path2": "/home/user/file2.txt"
+    "file1": "/home/user/version1.txt",
+    "file2": "/home/user/version2.txt"
 })
 
-# Compare directories
-result = await client.call_tool("compare_directories_tool", {
-    "path1": "/home/user/backup1",
-    "path2": "/home/user/backup2"
+# Generate file hash
+result = await client.call_tool("file_hash_tool", {
+    "path": "/home/user/important.zip",
+    "algorithm": "sha256"
 })
 
-# Clean temporary files
+# Clean up temporary files
 result = await client.call_tool("clean_temp_files_tool", {
-    "path": "/home/user"
-})
-
-# Clean empty directories
-result = await client.call_tool("clean_empty_directories_tool", {
     "path": "/home/user"
 })
 ```
 
 ---
 
-## 🔄 Example MCP Workflow
+## 🔄 Real-World Workflow Example
 
-### Scenario: Automated Backup & Cleanup System
+### Automated Backup and Cleanup
 
 ```python
 import asyncio
 from mcp import Client
 
-async def backup_and_cleanup():
+async def backup_workflow():
     """
-    Automated workflow:
-    1. Find large files that aren't backed up
-    2. Create ZIP archive of important directories
-    3. Identify and remove duplicate files
-    4. Clean up temporary files
-    5. Verify backup integrity with hashing
+    Complete workflow:
+    1. Find large files
+    2. Create backup archive
+    3. Detect duplicates
+    4. Remove temporary files
+    5. Verify backup integrity
     """
     
     client = Client("http://localhost:8000/mcp")
     
-    # Step 1: Find large files
+    # Step 1: Analyze large files
     print("📊 Analyzing large files...")
     large_files = await client.call_tool("find_large_files_tool", {
         "path": "/home/user/documents",
-        "size_mb": 50
+        "min_size_mb": 50
     })
     print(f"Found {len(large_files['files'])} files > 50MB")
     
     # Step 2: Create backup
-    print("📦 Creating backup archive...")
+    print("📦 Creating backup...")
     backup = await client.call_tool("create_zip_tool", {
         "source_path": "/home/user/documents",
-        "zip_path": "/backups/documents-latest.zip"
+        "zip_path": "/backups/documents.zip"
     })
-    print(f"Backup created: {backup['zip_path']}")
     
     # Step 3: Find duplicates
-    print("🔍 Detecting duplicate files...")
+    print("🔍 Detecting duplicates...")
     duplicates = await client.call_tool("duplicate_file_finder_tool", {
         "path": "/home/user/documents"
     })
-    print(f"Found {len(duplicates['duplicates'])} duplicate sets")
     
-    # Step 4: Remove duplicates (keep one of each)
-    for dup_group in duplicates['duplicates'][1:]:  # Keep first, delete rest
-        for dup_file in dup_group[1:]:
-            await client.call_tool("delete_file_tool", {
-                "path": dup_file
-            })
-    print("✅ Removed duplicate files")
-    
-    # Step 5: Clean temporary files
+    # Step 4: Clean up
     print("🧹 Cleaning temporary files...")
-    cleaned = await client.call_tool("clean_temp_files_tool", {
+    await client.call_tool("clean_temp_files_tool", {
         "path": "/home/user"
     })
-    print(f"Removed {cleaned['count']} temporary files")
     
-    # Step 6: Verify backup integrity
-    print("🔐 Verifying backup integrity...")
+    # Step 5: Verify backup
+    print("🔐 Verifying backup...")
     hash_result = await client.call_tool("file_hash_tool", {
-        "path": "/backups/documents-latest.zip",
+        "path": "/backups/documents.zip",
         "algorithm": "sha256"
     })
-    print(f"Backup hash: {hash_result['hash']}")
+    print(f"Backup verified: {hash_result['hash']}")
     
-    print("\n✨ Backup and cleanup workflow completed!")
+    print("✅ Workflow complete!")
 
-# Run the workflow
-asyncio.run(backup_and_cleanup())
+asyncio.run(backup_workflow())
 ```
 
 ---
 
-## 🎯 All Available Tools (34 Total)
+## 🏗️ Project Structure
 
-### File Management (11 tools)
-| Tool | Purpose |
-|------|---------|
-| `list_files_tool` | List files and directories |
-| `create_file_tool` | Create new file with content |
-| `read_file_tool` | Read file contents |
-| `update_file_tool` | Replace entire file content |
-| `append_file_tool` | Append content to file |
-| `delete_file_tool` | Delete a file |
-| `rename_file_tool` | Rename file |
-| `move_file_tool` | Move file to new location |
-| `copy_file_tool` | Copy file to destination |
-| `create_directory_tool` | Create new directory |
-| `delete_directory_tool` | Delete directory (recursive) |
+```
+file-manager-mcp/
+├── main.py                      # Entry point, MCP server initialization
+├── requirements.txt             # Python dependencies
+├── README.md                    # This file
+├── .env                         # Configuration (create locally)
+├── .gitignore                   # Git ignore rules
+│
+├── services/                    # Core business logic
+│   ├── file_service.py         # File CRUD operations
+│   ├── search_service.py       # Search and discovery
+│   ├── batch_service.py        # Bulk operations
+│   ├── zip_service.py          # Archive operations
+│   ├── utility_service.py      # Hashing, cleanup, comparison
+│   └── security_service.py     # Path validation and security
+│
+└── server.log                   # Server logs (generated)
+```
 
-### Search & Discovery (4 tools)
-| Tool | Purpose |
-|------|---------|
-| `search_files_tool` | Find files by name pattern |
-| `get_file_info_tool` | Get detailed file metadata |
-| `get_directory_info_tool` | Get directory statistics |
-| `tree_view_tool` | Generate directory tree |
+### Service Architecture
 
-### Batch Operations (7 tools)
-| Tool | Purpose |
-|------|---------|
-| `batch_create_files_tool` | Create multiple files |
-| `batch_delete_files_tool` | Delete multiple files |
-| `batch_move_files_tool` | Move multiple files |
-| `batch_copy_files_tool` | Copy multiple files |
-| `batch_rename_files_tool` | Rename multiple files |
-| `batch_create_directories_tool` | Create multiple directories |
-| `batch_delete_directories_tool` | Delete multiple directories |
+- **File Service**: Core file I/O operations with complete path handling
+- **Search Service**: Pattern matching, file discovery, and tree generation
+- **Batch Service**: Optimized bulk operations with atomic transactions
+- **ZIP Service**: Archive creation, extraction, and inspection
+- **Utility Service**: Hashing, deduplication, analysis, and cleanup
+- **Security Service**: Path traversal prevention and access validation
 
-### Archive Operations (3 tools)
-| Tool | Purpose |
-|------|---------|
-| `create_zip_tool` | Create ZIP archive |
-| `extract_zip_tool` | Extract ZIP archive |
-| `list_zip_contents_tool` | List ZIP contents |
+---
 
-### Utilities (7 tools)
-| Tool | Purpose |
-|------|---------|
-| `file_hash_tool` | Generate file hash (MD5, SHA-1, SHA-256) |
-| `duplicate_file_finder_tool` | Find duplicate files |
-| `compare_files_tool` | Compare two files |
-| `compare_directories_tool` | Compare two directories |
-| `find_large_files_tool` | Find files exceeding size threshold |
-| `clean_empty_directories_tool` | Remove empty directories |
-| `clean_temp_files_tool` | Remove temporary files |
+## 🧪 Testing the Server
 
-### System & Metadata (2 tools)
-| Tool | Purpose |
-|------|---------|
-| `health_check_tool` | Check server health |
-| `server_info_tool` | Get server configuration |
-| `available_tools_tool` | List all available tools |
+### Using MCP Inspector
+
+The MCP Inspector is an interactive testing tool for MCP servers:
+
+```bash
+# Terminal 1: Start the File Manager MCP server
+python main.py
+
+# Terminal 2: Open MCP Inspector
+npx @modelcontextprotocol/inspector @modelcontextprotocol/inspector
+```
+
+Then connect to `http://localhost:8000/mcp`
+
+### Testing Workflow
+
+1. **Health Check**: Call `health_check_tool` → verify server is running
+2. **Tool Discovery**: Call `available_tools_tool` → list all 34 tools
+3. **List Files**: Call `list_files_tool` with `path: "."` → verify file listing
+4. **Tree View**: Call `tree_view_tool` → generate directory tree
+5. **Create File**: Call `create_file_tool` → create test file
+6. **Clean Up**: Call `delete_file_tool` → remove test file
+
+### Using curl for Basic Testing
+
+```bash
+# Check health
+curl http://localhost:8000/health
+
+# Verify MCP endpoint
+curl -X POST http://localhost:8000/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"method":"tools/list"}'
+```
 
 ---
 
 ## 🔒 Security Considerations
 
-File Manager MCP implements multiple security layers to prevent misuse and unauthorized access:
+### Local Execution Security
 
-### Path Validation
+Since File Manager MCP runs **locally on your machine**, security is paramount:
 
-- **Path Traversal Prevention**: All paths are validated to prevent `../` escape sequences
-- **Symbolic Link Protection**: Symlinks are resolved and validated against allowed base directories
-- **Absolute Path Enforcement**: All paths are converted to absolute paths for consistency
+#### Path Validation
+- All paths are validated to prevent `../` directory traversal attacks
+- Symbolic links are resolved and validated
+- Only absolute paths are accepted internally
 
-### Access Control
+#### Access Control
+- **Optional Base Directory Restriction**: Configure `ALLOWED_BASE_DIRS` to limit operations to specific directories
+- **Permission Checks**: Respects system filesystem permissions
+- **Request Validation**: All parameters are validated before execution
 
-- **Base Directory Restriction**: Operations are restricted to configured allowed directories
-- **Permission Checks**: Filesystem permissions are respected before operations
-- **Request Authentication**: Authentication headers can be validated via `auth.py`
-
-### Data Safety
-
-- **Atomic Operations**: File operations use atomic writes to prevent corruption
-- **Backup Before Delete**: Critical operations can be logged for audit trails
-- **Error Handling**: Detailed error messages without exposing sensitive paths
-
-### Best Practices
+#### Best Practices
 
 ```python
-# ✅ DO: Validate user input
-result = await client.call_tool("create_file_tool", {
-    "path": secure_path_join(base_dir, user_input),
-    "content": sanitized_content
+# ✅ DO: Use absolute paths
+await client.call_tool("create_file_tool", {
+    "path": "/home/user/documents/file.txt",
+    "content": "safe"
 })
 
-# ❌ DON'T: Trust user paths directly
-result = await client.call_tool("create_file_tool", {
-    "path": user_provided_path,  # Potential traversal attack!
-    "content": content
-})
+# ✅ DO: Restrict base directories in .env
+# ALLOWED_BASE_DIRS=/home/user:/tmp
+
+# ✅ DO: Enable path validation
+# ENABLE_PATH_VALIDATION=true
+
+# ❌ DON'T: Use user-provided paths directly
+user_input = request.args.get('path')
+await client.call_tool("read_file_tool", {"path": user_input})
+
+# ❌ DON'T: Trust relative paths
+await client.call_tool("delete_file_tool", {"path": "../../../etc/passwd"})
 ```
 
-### Deployment Security
+### Deployment Security Checklist
 
-When deploying to production:
+When using this server:
 
-1. **Enable Path Validation**: Set `ENABLE_PATH_VALIDATION=true`
-2. **Configure Allowed Directories**: Set `ALLOWED_BASE_DIRS` environment variable
-3. **Enable Request Logging**: Set `ENABLE_REQUEST_LOGGING=true`
-4. **Use HTTPS**: Deploy behind reverse proxy with TLS
-5. **Restrict Network Access**: Use firewall rules to limit access
-6. **Implement Rate Limiting**: Prevent abuse through request throttling
-7. **Monitor Logs**: Set up alerting for suspicious activities
+- [ ] Run on localhost only (`MCP_HOST=127.0.0.1`)
+- [ ] Enable path validation (`ENABLE_PATH_VALIDATION=true`)
+- [ ] Configure allowed directories (`ALLOWED_BASE_DIRS`)
+- [ ] Enable request logging (`ENABLE_REQUEST_LOGGING=true`)
+- [ ] Review logs regularly for suspicious activity
+- [ ] Keep Python and dependencies updated
+- [ ] Restrict file permissions on `.env` file (600)
 
 ---
 
-## ⚡ Performance Considerations
+## 💡 Why Filesystem MCP Servers Run Locally
 
-### Optimization Strategies
+Filesystem MCP servers like File Manager MCP are designed to run locally for several important reasons:
 
-#### 1. Batch Operations
+### Security & Privacy
+- **Direct Access**: AI assistants need direct access to your local filesystem
+- **No Transmission**: Files never leave your machine or transit through external servers
+- **Data Control**: Complete control over what files are accessed and when
+- **Encryption**: Your data remains encrypted at rest on your machine
 
-Use batch operations for better performance:
+### Performance
+- **Zero Network Latency**: Local execution eliminates network delays
+- **Bandwidth Efficiency**: No need to transmit file contents over network
+- **Instant Operations**: Direct filesystem access is orders of magnitude faster
+- **Scalability**: Handle large files and directories without network constraints
 
-```python
-# ❌ Inefficient: Multiple individual calls
-for file in files:
-    await client.call_tool("create_file_tool", {"path": file, "content": content})
+### Reliability
+- **Offline Capable**: Works without internet connection
+- **No Server Dependency**: No external service can go down and break functionality
+- **Guaranteed Availability**: Always available when your machine is running
+- **Atomic Operations**: Direct filesystem access ensures data consistency
 
-# ✅ Efficient: Single batch call
-await client.call_tool("batch_create_files_tool", {"files": files})
+### Architecture
+```
+┌─────────────────────────────────┐
+│  Your Machine (Local Execution) │
+│  ┌─────────────────────────────┐│
+│  │  Claude/Cursor/VS Code      ││
+│  │         ↕ (IPC)             ││
+│  │  File Manager MCP Server    ││
+│  │         ↕ (Direct I/O)      ││
+│  │    Your Local Filesystem    ││
+│  └─────────────────────────────┘│
+└─────────────────────────────────┘
 ```
 
-**Performance Impact**: Batch operations are **5-10x faster** for multiple files.
+This local-first architecture ensures:
+- ✅ Maximum security and privacy
+- ✅ Optimal performance
+- ✅ Complete reliability
+- ✅ Full data control
 
-#### 2. Search Optimization
+---
 
-Limit search scope to improve performance:
+## 🛠️ Development & Contributing
 
-```python
-# ✅ Better: Narrow search scope
-await client.call_tool("search_files_tool", {
-    "path": "/home/user/documents",  # Specific directory
-    "pattern": "*.pdf"
-})
-
-# ❌ Slower: Full filesystem search
-await client.call_tool("search_files_tool", {
-    "path": "/",  # Entire filesystem
-    "pattern": "*.pdf"
-})
-```
-
-#### 3. Large File Operations
-
-For large directories or files:
-
-```python
-# When listing directories with thousands of files
-# Use pagination and limit results
-result = await client.call_tool("list_files_tool", {
-    "path": "/large/directory",
-    "max_results": 1000
-})
-```
-
-#### 4. Hashing Performance
-
-Use faster algorithms for large files:
-
-```python
-# ❌ Slower: Full SHA-256 hash
-result = await client.call_tool("file_hash_tool", {
-    "path": "/large/file.iso",
-    "algorithm": "sha256"
-})
-
-# ✅ Faster: Quick MD5 for deduplication
-result = await client.call_tool("file_hash_tool", {
-    "path": "/large/file.iso",
-    "algorithm": "md5"
-})
-```
-
-### Benchmarks
-
-Typical performance metrics on modern hardware:
-
-| Operation | Time | Notes |
-|-----------|------|-------|
-| List 10,000 files | ~500ms | Single directory, no recursion |
-| Create file | ~5ms | Includes I/O |
-| Batch create 100 files | ~50ms | ~0.5ms per file |
-| Create ZIP (1GB) | ~2-5s | Depends on I/O speed |
-| Hash large file (1GB) | ~3-8s | Algorithm and disk speed dependent |
-| Find duplicates | Linear | Proportional to total file size |
-| Tree view (10 levels) | ~200ms | Depends on directory breadth |
-
-### Recommended Settings
+### Local Development Setup
 
 ```bash
-# Server configuration for optimal performance
-MAX_CONCURRENT_OPERATIONS=10
-REQUEST_TIMEOUT_SECONDS=300
-BATCH_OPERATION_SIZE=1000
-LOG_LEVEL=INFO  # Use INFO in production, not DEBUG
+# Clone and setup
+git clone https://github.com/parthRana26/file-manager-mcp.git
+cd file-manager-mcp
+
+# Create virtual environment
+uv venv
+source .venv/bin/activate
+
+# Install dependencies
+uv pip install -r requirements.txt
+
+# Run with debug logging
+LOG_LEVEL=DEBUG python main.py
 ```
-
----
-
-## 🗺️ Roadmap
-
-### Phase 1: Core Foundation ✅
-- [x] Basic CRUD operations
-- [x] Directory management
-- [x] File search and discovery
-- [x] Archive operations
-- [x] Utility tools (hash, cleanup)
-- [x] Health checks and metadata
-
-### Phase 2: Advanced Features (Current)
-- [x] Batch operations with rollback
-- [x] Duplicate file detection
-- [x] Directory comparison
-- [x] Detailed logging and monitoring
-
-### Phase 3: Enterprise Features (Planned)
-- [ ] File watch/monitoring service
-- [ ] Encryption support (AES-256)
-- [ ] Database integration for metadata
-- [ ] Advanced permission models
-- [ ] Distributed operations support
-
-### Phase 4: Integration & Expansion (Planned)
-- [ ] Cloud storage backends (S3, GCS, Azure)
-- [ ] Database file operations
-- [ ] Media file processing
-- [ ] Advanced analytics dashboard
-
----
-
-## 🚀 Future Enhancements
-
-### Planned Improvements
-
-#### 1. File Monitoring & Watching
-```python
-# Future: Watch files for changes
-await client.call_tool("watch_directory_tool", {
-    "path": "/home/user/documents",
-    "callback_url": "https://your-api.com/file-changes",
-    "filter": "*.pdf"
-})
-```
-
-#### 2. Encryption Support
-```python
-# Future: Encrypt/decrypt files
-await client.call_tool("encrypt_file_tool", {
-    "path": "/home/user/sensitive.txt",
-    "algorithm": "aes-256",
-    "password": "secure-password"
-})
-```
-
-#### 3. Cloud Storage Backends
-```python
-# Future: Seamless cloud integration
-await client.call_tool("upload_to_s3_tool", {
-    "local_path": "/home/user/backup.zip",
-    "s3_path": "s3://my-bucket/backups/",
-    "region": "us-west-2"
-})
-```
-
-#### 4. Media Processing
-```python
-# Future: Image/video operations
-await client.call_tool("create_thumbnail_tool", {
-    "image_path": "/home/user/photo.jpg",
-    "output_path": "/home/user/thumb.jpg",
-    "size": "256x256"
-})
-```
-
-#### 5. Sync Operations
-```python
-# Future: Two-way sync between directories
-await client.call_tool("sync_directories_tool", {
-    "source": "/home/user/local",
-    "destination": "/mnt/nas/backup",
-    "bidirectional": True,
-    "ignore_patterns": ["*.tmp", "node_modules"]
-})
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Whether it's bug reports, feature requests, or code improvements, your help makes File Manager MCP better.
-
-### Getting Started
-
-1. **Fork the repository**
-   ```bash
-   git clone https://github.com/your-username/file-manager-mcp.git
-   ```
-
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-3. **Make your changes**
-   - Follow PEP 8 style guidelines
-   - Write descriptive commit messages
-   - Add tests for new functionality
-   - Update documentation as needed
-
-4. **Commit and push**
-   ```bash
-   git commit -am "Add your feature description"
-   git push origin feature/your-feature-name
-   ```
-
-5. **Open a Pull Request**
-   - Describe your changes in detail
-   - Reference related issues
-   - Ensure all tests pass
 
 ### Development Guidelines
 
-- **Code Style**: Follow PEP 8 and use `black` for formatting
-- **Testing**: Write unit tests for new features
-- **Documentation**: Update docstrings and README
+- **Code Style**: Follow PEP 8 standards
 - **Error Handling**: Provide meaningful error messages
 - **Logging**: Add appropriate log statements for debugging
+- **Testing**: Write tests for new functionality
+- **Documentation**: Update docstrings and README as needed
 
-### Report Issues
+### Contributing
 
-Found a bug? Please open an issue with:
+We welcome contributions! To contribute:
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/your-feature`
+3. **Make your changes** with clear, descriptive commits
+4. **Push to your fork**: `git push origin feature/your-feature`
+5. **Open a Pull Request** with detailed description
+
+### Reporting Issues
+
+Found a bug? Please report it with:
 - Detailed description of the problem
 - Steps to reproduce
 - Expected vs actual behavior
-- Environment details (Python version, OS, etc.)
-- Relevant logs or error messages
+- Environment details (Python version, OS)
+- Relevant error messages or logs
 
-### Feature Requests
+---
 
-Have an idea for improvement? Create an issue with:
-- Clear description of the feature
-- Use cases and benefits
-- Suggested implementation approach
-- Any relevant examples
+## 📖 Project Structure Documentation
+
+### File Organization
+
+```
+├── main.py
+│   └─ FastMCP server initialization
+│   └─ Tool registration (34 tools)
+│   └─ Error handling with safe_execute wrapper
+│   └─ Server startup on port 8000
+│
+├── services/file_service.py
+│   └─ list_files() → Directory listing
+│   └─ create_file() → File creation
+│   └─ read_file() → File reading
+│   └─ update_file() → File overwrite
+│   └─ append_file() → File append
+│   └─ delete_file() → File deletion
+│   └─ [rename, move, copy] → File operations
+│   └─ [create, delete]_directory() → Directory ops
+│
+├── services/search_service.py
+│   └─ search_files() → Pattern matching
+│   └─ get_file_info() → File metadata
+│   └─ get_directory_info() → Directory stats
+│   └─ tree_view() → Directory tree
+│
+├── services/batch_service.py
+│   └─ batch_create_files() → Multiple file creation
+│   └─ batch_delete_files() → Multiple file deletion
+│   └─ batch_move_files() → Multiple file moves
+│   └─ [copy, rename]_files() → Batch operations
+│   └─ [create, delete]_directories() → Batch dirs
+│
+├── services/zip_service.py
+│   └─ create_zip() → Archive creation
+│   └─ extract_zip() → Archive extraction
+│   └─ list_zip_contents() → Archive listing
+│
+├── services/utility_service.py
+│   └─ find_large_files() → Size analysis
+│   └─ file_hash() → Hash generation
+│   └─ duplicate_file_finder() → Duplicate detection
+│   └─ compare_files() → File comparison
+│   └─ compare_directories() → Directory comparison
+│   └─ clean_empty_directories() → Cleanup
+│   └─ clean_temp_files() → Temp file removal
+│
+└── services/security_service.py
+    └─ validate_path() → Path traversal prevention
+    └─ check_permissions() → Permission validation
+    └─ resolve_symlinks() → Symlink handling
+```
 
 ---
 
@@ -939,9 +817,9 @@ Have an idea for improvement? Create an issue with:
 
 File Manager MCP is licensed under the **MIT License**.
 
-See the [LICENSE](LICENSE) file for full details.
+See the [LICENSE](LICENSE) file for complete details.
 
-### Summary
+### Quick Summary
 
 The MIT License permits you to:
 - ✅ Use, modify, and distribute this software
@@ -954,77 +832,65 @@ With the conditions:
 
 ---
 
-## 👤 Author
+## 🎯 Quick Reference
+
+### Starting the Server
+```bash
+python main.py
+```
+
+### Testing Health
+```bash
+curl http://localhost:8000/health
+```
+
+### MCP Endpoint
+```
+http://localhost:8000/mcp
+```
+
+### Environment Setup
+Create `.env` with:
+```
+MCP_PORT=8000
+LOG_LEVEL=INFO
+ENABLE_PATH_VALIDATION=true
+```
+
+### Adding to Claude Desktop
+Edit `~/.config/Claude/claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "file-manager": {
+      "command": "python",
+      "args": ["-m", "uvicorn", "main:mcp"],
+      "cwd": "/path/to/file-manager-mcp"
+    }
+  }
+}
+```
+
+---
+
+## 📞 Support & Resources
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/parthRana26/file-manager-mcp/issues)
+- **MCP Documentation**: [modelcontextprotocol.io](https://modelcontextprotocol.io/)
+- **FastMCP Guide**: [FastMCP on GitHub](https://github.com/jreichel/fastmcp)
+- **Python Docs**: [Python asyncio](https://docs.python.org/3/library/asyncio.html)
+
+---
+
+## 👨‍💻 Author
 
 **Parth Rana**
 
 - **GitHub**: [github.com/parthRana26](https://github.com/parthRana26)
-- **Repository**: [github.com/parthRana26/file-manager-mcp](https://github.com/parthRana26/file-manager-mcp)
-- **Email**: [contact via GitHub]
+- **Repository**: [file-manager-mcp](https://github.com/parthRana26/file-manager-mcp)
 
-### About
-
-Parth Rana is a software engineer passionate about building robust, scalable systems for AI applications. File Manager MCP represents the intersection of practical filesystem management and modern AI agent architectures.
+A software engineer passionate about building robust tools for AI applications and local-first systems.
 
 ---
 
-## 📞 Support & Community
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/parthRana26/file-manager-mcp/issues)
-- **GitHub Discussions**: [Ask questions and discuss ideas](https://github.com/parthRana26/file-manager-mcp/discussions)
-- **MCP Documentation**: [modelcontextprotocol.io](https://modelcontextprotocol.io/)
-- **FastMCP Guide**: [FastMCP Documentation](https://github.com/jreichel/fastmcp)
-
----
-
-## 🎓 Learning Resources
-
-### Getting Started with MCP
-
-- [Model Context Protocol Specification](https://modelcontextprotocol.io/introduction)
-- [MCP Protocol Overview](https://modelcontextprotocol.io/introduction)
-- [Claude with MCP](https://claude.ai/docs/mcp)
-
-### Python & Async Programming
-
-- [Python Async Documentation](https://docs.python.org/3/library/asyncio.html)
-- [FastAPI Guide](https://fastapi.tiangolo.com/)
-- [Uvicorn Server](https://www.uvicorn.org/)
-
-### File System Best Practices
-
-- [Python pathlib Documentation](https://docs.python.org/3/library/pathlib.html)
-- [Filesystem Security Guidelines](https://owasp.org/www-community/attacks/Path_Traversal)
-- [File I/O Best Practices](https://docs.python.org/3/howto/functional.html)
-
----
-
-## 📊 Project Statistics
-
-| Metric | Value |
-|--------|-------|
-| Total Tools | 34 |
-| Lines of Code | ~3,000+ |
-| Service Modules | 6 |
-| Python Version | 3.11+ |
-| License | MIT |
-| Status | Production Ready |
-| Last Updated | 2024 |
-
----
-
-## ⭐ Show Your Support
-
-If you find File Manager MCP useful, please:
-
-- ⭐ Star this repository
-- 🔗 Share it with your network
-- 💬 Provide feedback and suggestions
-- 🤝 Contribute to the project
-- 📝 Write about it in your blog
-
----
-
-**Made with ❤️ by [Parth Rana](https://github.com/parthRana26)**
-
-*Last Updated: 2024 | Version: 1.0.0 | Status: Production Ready*
+**Made with ❤️ for the AI and MCP community**

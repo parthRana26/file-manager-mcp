@@ -1,4 +1,3 @@
-# file-manager-mcp
 # 🗂️ File Manager MCP
 
 **Open-Source MCP Server for Local File Management**

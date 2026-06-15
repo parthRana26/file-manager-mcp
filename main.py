@@ -427,8 +427,4 @@ if __name__ == "__main__":
         f"Starting File Manager MCP on port {PORT}"
     )
     
-    mcp.run(
-        transport="streamable-http",
-        host="0.0.0.0",
-        port=PORT
-    )
+    mcp.run()

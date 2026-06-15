@@ -543,6 +543,18 @@ Licensed under the MIT License.
 See the LICENSE file for details.
 
 ---
+## 👨‍💻 Maintainer
+
+**Parth Rana**
+
+Maintainer of File Manager MCP.
+
+* GitHub: https://github.com/parthRana26
+* LinkedIn: https://linkedin.com/in/parth-rana-profile
+
+Feel free to open issues, suggest features, or submit pull requests.
+
+---
 
 # ⭐ Support
 
